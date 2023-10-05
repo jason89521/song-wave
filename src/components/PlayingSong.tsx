@@ -8,16 +8,18 @@ export function PlayingSong() {
     waitingSongModel,
     useCallback(state => state.data, [])
   );
-  const nextSong = waitingSongs[0];
   const [currentSong, setCurrentSong] = useState<SongWithAudioURL | null>(null);
 
   useEffect(() => {
+    // Initiate current song if it is null and there are waiting songs.
+    const nextSong = waitingSongs[0];
     if (currentSong !== null || typeof nextSong === 'undefined') {
       return;
     }
 
     setCurrentSong(nextSong);
-  }, [currentSong, nextSong]);
+    waitingSongModel.mutate(draft => draft.data.shift());
+  }, [currentSong, waitingSongs]);
 
   console.log(waitingSongs);
 
@@ -31,8 +33,13 @@ export function PlayingSong() {
             src={currentSong.audioURL}
             autoPlay
             onEnded={() => {
-              waitingSongModel.mutate(draft => draft.data.shift());
-              setCurrentSong(null);
+              const nextSong = waitingSongs[0];
+              if (nextSong) {
+                setCurrentSong(nextSong);
+                waitingSongModel.mutate(draft => draft.data.shift());
+              } else {
+                setCurrentSong(null);
+              }
             }}
           />
           現在播放：{currentSong.name}
