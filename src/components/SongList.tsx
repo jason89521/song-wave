@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useIndexedDB } from '../indexedDB';
 import { SONG_STORE_NAME } from '../constants';
 import { Song, SongWithAudioURL } from '../type';
+import { waitingSongModel } from '../model';
 
 export function SongList() {
   const db = useIndexedDB();
@@ -28,8 +29,22 @@ export function SongList() {
 
         return (
           <div className="mb-4" key={index}>
-            <div>{title}</div>
-            <audio controls src={song.audioURL} title={title} />
+            <div>
+              <span>{title}</span>
+              <div className="flex gap-2">
+                <button
+                  className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm"
+                  onClick={() => {
+                    waitingSongModel.mutate(draft => draft.data.push(song));
+                  }}
+                >
+                  點播
+                </button>
+                <button className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm">
+                  插播
+                </button>
+              </div>
+            </div>
           </div>
         );
       })}

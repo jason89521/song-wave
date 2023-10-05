@@ -37,26 +37,26 @@ export function AddSongPage() {
           setDisabled(false);
         };
       }}
-      className="flex flex-col gap-2 px-4 py-8"
+      className="flex flex-col gap-2"
     >
       <label>
-        Lang:
+        語言:
         <input disabled={disabled} type="text" name="lang" className={inputClassName} required />
       </label>
       <label>
-        Singer:
+        歌手:
         <input disabled={disabled} type="text" name="singer" className={inputClassName} required />
       </label>
       <label>
-        Name:
+        歌曲名稱:
         <input disabled={disabled} type="text" name="name" className={inputClassName} required />
       </label>
       <label>
-        File:
+        檔案:
         <input disabled={disabled} name="file" type="file" accept="audio/*" required />
       </label>
       <button type="submit" className="bg-slate-300 px-4 py-2 rounded">
-        Submit
+        上傳
       </button>
     </form>
   );

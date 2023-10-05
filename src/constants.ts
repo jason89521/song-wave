@@ -1,4 +1,4 @@
-import { HomePage, AddSongPage } from './pages';
+import { HomePage, AddSongPage, ListPage } from './pages';
 
 export const DB_VERSION = 1;
 export const DB_NAME = 'song_wave';
@@ -13,9 +13,11 @@ export const enum SongIndex {
 export const enum Page {
   home = 'home',
   addSong = 'add-song',
+  list = 'list',
 }
 
 export const pageComponentRecord = {
   [Page.home]: HomePage,
+  [Page.list]: ListPage,
   [Page.addSong]: AddSongPage,
 };
