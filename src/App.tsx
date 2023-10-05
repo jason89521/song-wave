@@ -47,8 +47,8 @@ function App() {
 
   return (
     <IndexedDBProvider name={DB_NAME} version={DB_VERSION} onUpgradeNeeded={handleUpgrade}>
-      <PlayingSong />
       <div className="px-4">
+        <PlayingSong />
         <div className="flex gap-4 mb-4">
           <button
             className="px-2 py-1 bg-gray-300 rounded"

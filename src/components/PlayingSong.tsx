@@ -1,10 +1,13 @@
 import { useModel } from 'daxus';
 import { waitingSongModel } from '../model';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SongWithAudioURL } from '../type';
 
 export function PlayingSong() {
-  const waitingSongs = useModel(waitingSongModel, state => state.data);
+  const waitingSongs = useModel(
+    waitingSongModel,
+    useCallback(state => state.data, [])
+  );
   const nextSong = waitingSongs[0];
   const [currentSong, setCurrentSong] = useState<SongWithAudioURL | null>(null);
 
