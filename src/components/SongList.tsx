@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useIndexedDB } from '../indexedDB';
-import { SONG_STORE_NAME } from '../constants';
+import { DB_NAME, SONG_STORE_NAME, SongIndex } from '../constants';
 import { Song, SongWithAudioURL } from '../type';
 import { interludeSong, requestedSongModel } from '../model';
 import { Button } from '.';
+import { EDBObjectStore, openDB } from '../indexedDB/EDB';
 
 export function SongList() {
   const db = useIndexedDB();
@@ -21,6 +22,20 @@ export function SongList() {
         })
       );
     };
+
+    (async () => {
+      const edb = await openDB<{ songs: { value: Song; index: SongIndex } }>({
+        name: DB_NAME,
+        onUpgrade() {},
+      });
+      const transaction = edb.transaction(['songs'], 'readwrite');
+      const store = new EDBObjectStore<SongIndex>({ store: transaction.objectStore('songs') });
+      const index = store.index(SongIndex.name);
+      console.log(await index.get('上水的花'));
+      console.log(await index.getAll());
+      console.log(await index.getKey('上水的花'));
+      console.log(await index.getAllKeys());
+    })();
   }, [db]);
 
   return (
