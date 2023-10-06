@@ -1,16 +1,16 @@
 import { useModel } from 'daxus';
-import { waitingSongModel } from '../model';
+import { interludeSong, requestedSongModel } from '../model';
 import { useCallback } from 'react';
 
 export function HomePage() {
-  const waitingSongs = useModel(
-    waitingSongModel,
+  const requestedSongs = useModel(
+    requestedSongModel,
     useCallback(state => state.data, [])
   );
 
   return (
     <div>
-      {waitingSongs.map((song, index) => {
+      {requestedSongs.map((song, index) => {
         const title = `[${song.lang}] ${song.singer} - ${song.name}`;
 
         return (
@@ -18,7 +18,12 @@ export function HomePage() {
             <div>
               <span>{title}</span>
               <div className="flex gap-2">
-                <button className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm">
+                <button
+                  className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm"
+                  onClick={() => {
+                    interludeSong(index);
+                  }}
+                >
                   插播
                 </button>
               </div>

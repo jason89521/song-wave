@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useIndexedDB } from '../indexedDB';
 import { SONG_STORE_NAME } from '../constants';
 import { Song, SongWithAudioURL } from '../type';
-import { waitingSongModel } from '../model';
+import { interludeSong, requestedSongModel } from '../model';
 
 export function SongList() {
   const db = useIndexedDB();
@@ -35,12 +35,17 @@ export function SongList() {
                 <button
                   className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm"
                   onClick={() => {
-                    waitingSongModel.mutate(draft => draft.data.push(song));
+                    requestedSongModel.mutate(draft => draft.data.push(song));
                   }}
                 >
                   點播
                 </button>
-                <button className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm">
+                <button
+                  className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm"
+                  onClick={() => {
+                    interludeSong(song);
+                  }}
+                >
                   插播
                 </button>
               </div>

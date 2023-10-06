@@ -1,27 +1,25 @@
 import { useModel } from 'daxus';
-import { waitingSongModel } from '../model';
+import { requestedSongModel } from '../model';
 import { useCallback, useEffect, useState } from 'react';
 import { SongWithAudioURL } from '../type';
 
 export function PlayingSong() {
-  const waitingSongs = useModel(
-    waitingSongModel,
+  const requestedSongs = useModel(
+    requestedSongModel,
     useCallback(state => state.data, [])
   );
   const [currentSong, setCurrentSong] = useState<SongWithAudioURL | null>(null);
 
   useEffect(() => {
     // Initiate current song if it is null and there are waiting songs.
-    const nextSong = waitingSongs[0];
+    const nextSong = requestedSongs[0];
     if (currentSong !== null || typeof nextSong === 'undefined') {
       return;
     }
 
     setCurrentSong(nextSong);
-    waitingSongModel.mutate(draft => draft.data.shift());
-  }, [currentSong, waitingSongs]);
-
-  console.log(waitingSongs);
+    requestedSongModel.mutate(draft => draft.data.shift());
+  }, [currentSong, requestedSongs]);
 
   return (
     <div className="mb-4">
@@ -33,10 +31,10 @@ export function PlayingSong() {
             src={currentSong.audioURL}
             autoPlay
             onEnded={() => {
-              const nextSong = waitingSongs[0];
+              const nextSong = requestedSongs[0];
               if (nextSong) {
                 setCurrentSong(nextSong);
-                waitingSongModel.mutate(draft => draft.data.shift());
+                requestedSongModel.mutate(draft => draft.data.shift());
               } else {
                 setCurrentSong(null);
               }
