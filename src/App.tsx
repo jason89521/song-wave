@@ -8,7 +8,7 @@ import {
   DB_NAME,
   DB_VERSION,
 } from './constants';
-import { PlayingSong } from './components';
+import { Button, PlayingSong } from './components';
 
 function handleUpgrade(db: IDBDatabase, e: IDBVersionChangeEvent) {
   switch (e.oldVersion) {
@@ -50,24 +50,24 @@ function App() {
       <div className="px-4">
         <PlayingSong />
         <div className="flex gap-4 mb-4">
-          <button
+          <Button
             className="px-2 py-1 bg-gray-300 rounded"
             onClick={() => setCurrentPage(Page.home)}
           >
             主頁
-          </button>
-          <button
+          </Button>
+          <Button
             className="px-2 py-1 bg-gray-300 rounded"
             onClick={() => setCurrentPage(Page.list)}
           >
             歌單
-          </button>
-          <button
+          </Button>
+          <Button
             className="px-2 py-1 bg-gray-300 rounded"
             onClick={() => setCurrentPage(Page.addSong)}
           >
             新增歌曲
-          </button>
+          </Button>
         </div>
         <PageComponent />
       </div>

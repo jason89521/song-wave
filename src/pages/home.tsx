@@ -1,6 +1,7 @@
 import { useModel } from 'daxus';
 import { interludeSong, requestedSongModel } from '../model';
 import { useCallback } from 'react';
+import { Button } from '../components';
 
 export function HomePage() {
   const requestedSongs = useModel(
@@ -18,14 +19,22 @@ export function HomePage() {
             <div>
               <span>{title}</span>
               <div className="flex gap-2">
-                <button
-                  className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm"
+                <Button
                   onClick={() => {
                     interludeSong(index);
                   }}
                 >
                   插播
-                </button>
+                </Button>
+                <Button
+                  onClick={() => {
+                    requestedSongModel.mutate(draft => {
+                      draft.data.splice(index, 1);
+                    });
+                  }}
+                >
+                  刪除
+                </Button>
               </div>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { useIndexedDB } from '../indexedDB';
 import { SONG_STORE_NAME } from '../constants';
 import { Song, SongWithAudioURL } from '../type';
 import { interludeSong, requestedSongModel } from '../model';
+import { Button } from '.';
 
 export function SongList() {
   const db = useIndexedDB();
@@ -32,22 +33,22 @@ export function SongList() {
             <div>
               <span>{title}</span>
               <div className="flex gap-2">
-                <button
+                <Button
                   className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm"
                   onClick={() => {
                     requestedSongModel.mutate(draft => draft.data.push(song));
                   }}
                 >
                   點播
-                </button>
-                <button
+                </Button>
+                <Button
                   className="cursor-pointer rounded bg-slate-300 px-2 py-1 text-sm"
                   onClick={() => {
                     interludeSong(song);
                   }}
                 >
                   插播
-                </button>
+                </Button>
               </div>
             </div>
           </div>

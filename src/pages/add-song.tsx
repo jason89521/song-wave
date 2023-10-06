@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { SONG_STORE_NAME } from '../constants';
 import { useIndexedDB } from '../indexedDB';
 import { Song } from '../type';
+import { Button } from '../components';
 
 const inputClassName = 'border border-cyan-950 border-solid';
 
@@ -55,9 +56,9 @@ export function AddSongPage() {
         檔案:
         <input disabled={disabled} name="file" type="file" accept="audio/*" required />
       </label>
-      <button type="submit" className="bg-slate-300 px-4 py-2 rounded">
+      <Button type="submit" className="bg-slate-300 px-4 py-2 rounded">
         上傳
-      </button>
+      </Button>
     </form>
   );
 }
